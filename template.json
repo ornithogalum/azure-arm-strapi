@@ -2,14 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "password": {
+      "adminPassword": {
         "type": "string",
         "defaultValue": "strapi",
         "metadata": {
           "description": "VM Password"
         }
       },
-      "username": {
+      "adminUsername": {
         "type": "string",
         "defaultValue": "strapi",
         "metadata": {
@@ -40,8 +40,8 @@
         "ssh": {
           "publicKeys": [
             {
-              "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('username'))]",
-              "keyData": "[parameters('password')]"
+              "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('adminUsername'))]",
+              "keyData": "[parameters('adminPassword')]"
             }
           ]
         }
@@ -221,8 +221,8 @@
           },
           "osProfile": {
             "computerName": "[variables('virtualMachineName')]",
-            "adminUsername": "[parameters('username')]",
-            "adminPassword": "[parameters('password')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]",
         "customData": "[variables('customData')]",
             "linuxConfiguration": "[if(equals(variables('authenticationType'), 'password'), null(), variables('linuxConfiguration'))]"
           }
