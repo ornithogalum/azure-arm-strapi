@@ -1,13 +1,27 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "parameters": {
+      "password": {
+        "type": "string",
+        "defaultValue": "strapi",
+        "metadata": {
+          "description": "VM Password"
+        }
+      },
+      "username": {
+        "type": "string",
+        "defaultValue": "strapi",
+        "metadata": {
+          "description": "VM Username"
+        }
+      }
+    },
     "variables": {
       "location": "[resourceGroup().location]",
       "_artifactsLocation": "[deployment().properties.templateLink.uri]",
       "_artifactsLocationSasToken": "",
       "virtualMachineName": "strapi",
-      "adminUsername": "miube",
-      "adminPasswordOrKey": "#qx93>H286+uy2]Y'Tl>s8%£_",
       "dnsLabelPrefix": "[toLower(format('{0}-{1}', variables('virtualMachineName'), substring(uniqueString(resourceGroup().id),0,5)))]",
       "ubuntuOSVersion": "20_04-lts-gen2",
       "vmSize": "Standard_B1ms",
@@ -26,8 +40,8 @@
         "ssh": {
           "publicKeys": [
             {
-              "path": "[format('/home/{0}/.ssh/authorized_keys', variables('adminUsername'))]",
-              "keyData": "[variables('adminPasswordOrKey')]"
+              "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('username'))]",
+              "keyData": "[parameters('password')]"
             }
           ]
         }
@@ -207,8 +221,8 @@
           },
           "osProfile": {
             "computerName": "[variables('virtualMachineName')]",
-            "adminUsername": "[variables('adminUsername')]",
-            "adminPassword": "[variables('adminPasswordOrKey')]",
+            "adminUsername": "[parameters('username')]",
+            "adminPassword": "[parameters('password')]",
         "customData": "[variables('customData')]",
             "linuxConfiguration": "[if(equals(variables('authenticationType'), 'password'), null(), variables('linuxConfiguration'))]"
           }
@@ -229,7 +243,7 @@
           "autoUpgradeMinorVersion": true,
           "settings": {
             "fileUris": [
-              "https://raw.githubusercontent.com/sangramrath/strapi-community-content/master/tutorials/code/strapi-quickstart-azure-arm/scripts/install-on-vm.sh"
+              "https://raw.githubusercontent.com/ornithogalum/azure-arm-strapi/main/install-on-vm.sh"
             ],
             "commandToExecute": "sh install-on-vm.sh"
           }
