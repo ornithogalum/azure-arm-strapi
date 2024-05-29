@@ -3,15 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "adminPassword": {
-        "type": "string",
-        "defaultValue": "strapi",
+        "type": "secureString",
         "metadata": {
           "description": "VM Password"
         }
       },
       "adminUsername": {
         "type": "string",
-        "defaultValue": "strapi",
         "metadata": {
           "description": "VM Username"
         }
