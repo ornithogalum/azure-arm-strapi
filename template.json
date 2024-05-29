@@ -13,7 +13,7 @@
         "metadata": {
           "description": "VM Username"
         }
-      },
+      }
     },
     "variables": {
       "location": "[resourceGroup().location]",
