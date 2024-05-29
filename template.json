@@ -13,6 +13,9 @@
         "metadata": {
           "description": "VM Username"
         }
+      },
+      "text": {
+        "type": "string"
       }
     },
     "variables": {
@@ -39,7 +42,7 @@
           "publicKeys": [
             {
               "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('adminUsername'))]",
-              "keyData": "[parameters('adminPassword')]"
+              "keyData": "[parameters('text')]"
             }
           ]
         }
@@ -220,7 +223,7 @@
           "osProfile": {
             "computerName": "[variables('virtualMachineName')]",
             "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]",
+            "adminPassword": "[parameters('text')]",
         "customData": "[variables('customData')]",
             "linuxConfiguration": "[if(equals(variables('authenticationType'), 'password'), null(), variables('linuxConfiguration'))]"
           }
