@@ -14,9 +14,6 @@
           "description": "VM Username"
         }
       },
-      "text": {
-        "type": "string"
-      }
     },
     "variables": {
       "location": "[resourceGroup().location]",
@@ -42,7 +39,7 @@
           "publicKeys": [
             {
               "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('adminUsername'))]",
-              "keyData": "[parameters('text')]"
+              "keyData": "[parameters('adminPassword')]"
             }
           ]
         }
@@ -223,7 +220,7 @@
           "osProfile": {
             "computerName": "[variables('virtualMachineName')]",
             "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('text')]",
+            "adminPassword": "[parameters('adminPassword')]",
         "customData": "[variables('customData')]",
             "linuxConfiguration": "[if(equals(variables('authenticationType'), 'password'), null(), variables('linuxConfiguration'))]"
           }
