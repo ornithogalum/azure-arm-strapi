@@ -1,25 +1,13 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-      "adminPassword": {
-        "type": "secureString",
-        "metadata": {
-          "description": "VM Password"
-        }
-      },
-      "adminUsername": {
-        "type": "string",
-        "metadata": {
-          "description": "VM Username"
-        }
-      }
-    },
     "variables": {
       "location": "[resourceGroup().location]",
       "_artifactsLocation": "[deployment().properties.templateLink.uri]",
       "_artifactsLocationSasToken": "",
       "virtualMachineName": "strapi",
+      "adminUsername": "miube",
+      "adminPassword": "S4de26wtkp2uqvE9pDq6",
       "dnsLabelPrefix": "[toLower(format('{0}-{1}', variables('virtualMachineName'), substring(uniqueString(resourceGroup().id),0,5)))]",
       "ubuntuOSVersion": "20_04-lts-gen2",
       "vmSize": "Standard_B1ms",
@@ -38,8 +26,8 @@
         "ssh": {
           "publicKeys": [
             {
-              "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('adminUsername'))]",
-              "keyData": "[parameters('adminPassword')]"
+              "path": "[format('/home/{0}/.ssh/authorized_keys', variables('adminUsername'))]",
+              "keyData": "[variables('adminPassword')]"
             }
           ]
         }
@@ -219,8 +207,8 @@
           },
           "osProfile": {
             "computerName": "[variables('virtualMachineName')]",
-            "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]",
+            "adminUsername": "[variables('adminUsername')]",
+            "adminPassword": "[variables('adminPassword')]",
         "customData": "[variables('customData')]",
             "linuxConfiguration": "[if(equals(variables('authenticationType'), 'password'), null(), variables('linuxConfiguration'))]"
           }
