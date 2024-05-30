@@ -68,6 +68,44 @@ module.exports = {
   ],
 };
 EOF
+rm package.json
+cat << EOF > package.json
+{
+  "name": "blog",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi develop",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@strapi/strapi": "4.24.4",
+    "@strapi/plugin-users-permissions": "4.24.4",
+    "@strapi/plugin-i18n": "4.24.4",
+    "@strapi/plugin-cloud": "4.24.4",
+    "better-sqlite3": "8.6.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "5.3.4",
+    "styled-components": "5.3.3"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "c6123ccc-9c4a-4853-b26c-40c72a5cf66d"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
+EOF
 pm2 start ecosystem.config.js
 pm2 startup systemd
 exit
